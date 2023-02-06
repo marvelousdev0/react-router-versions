@@ -9,7 +9,7 @@ import {
 import { Routes, Route, Navigate } from "react-router-dom";
 
 const HomePage = lazy(() => import("../pages/HomePage/HomePage"));
-const LoginPage = lazy(() => import("../pages/Login/LoginPage"));
+const LoginPage = lazy(() => import("../pages/LoginPage/LoginPage"));
 
 type AuthContextType = {
   user: any;
@@ -101,6 +101,12 @@ const APP_ROUTES = [
     path: "/login",
     name: "Login",
     element: <LoginPage />,
+    guards: [],
+  },
+  {
+    path: "*",
+    name: "NotFound",
+    element: <div>Not Found</div>,
     guards: [],
   },
 ];
