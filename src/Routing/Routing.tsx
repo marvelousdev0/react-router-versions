@@ -1,15 +1,8 @@
-import {
-  Suspense,
-  createContext,
-  lazy,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
+import { Suspense, createContext, lazy as l, useCallback, useContext, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-const HomePage = lazy(() => import("../pages/HomePage/HomePage"));
-const LoginPage = lazy(() => import("../pages/LoginPage/LoginPage"));
+const HomePage = l(() => import("../pages/HomePage/HomePage"));
+const LoginPage = l(() => import("../pages/LoginPage/LoginPage"));
 
 type AuthContextType = {
   user: any;
@@ -40,11 +33,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
     return !!user;
   }, [user]);
 
-  return (
-    <AuthContext.Provider value={{ user, login, logout, isAuth }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, login, logout, isAuth }}>{children}</AuthContext.Provider>;
 };
 
 const useAuthContext = () => useContext(AuthContext);
@@ -79,9 +68,7 @@ const renderRoute = ({
   const guardChecks = guards.map((guard) => guard().guardCheck);
   const isAllowed = guardChecks.every((guardCheck) => guardCheck);
 
-  const redirectRoute = guards.map((guard) => guard().redirect)[
-    guardChecks.indexOf(false)
-  ];
+  const redirectRoute = guards.map((guard) => guard().redirect)[guardChecks.indexOf(false)];
 
   return isAllowed ? (
     <ProtectedRoute key={name} path={path} element={element} />

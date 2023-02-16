@@ -14,11 +14,7 @@ const AuthContext = createContext<AuthContextType>({
   isAuth: () => false,
 });
 
-export const AuthContextProvider = ({
-  children,
-}: {
-  children: JSX.Element;
-}) => {
+export const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
   const [user, setUser] = useState<any | null>({ name: "John Doe" });
 
   const login = useCallback((user: any) => {
@@ -33,11 +29,7 @@ export const AuthContextProvider = ({
     return !!user;
   }, [user]);
 
-  return (
-    <AuthContext.Provider value={{ user, login, logout, isAuth }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, login, logout, isAuth }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuthContext = () => useContext(AuthContext);
